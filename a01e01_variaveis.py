@@ -1,9 +1,5 @@
 import sys
 
-texto = "UniFECAF"
-numero = 2025
-logico = True
-
 output = "ALOCAÇÃO BASE EM BYTES ---------------------------------\n"
 
 types = {
