@@ -1,4 +1,4 @@
-# Lista de alunos (intercalando homem e mulher)
+# Lista de alunos
 alunos = [
     {"nome": "Lucas",   "nota": 8.5},
     {"nome": "Ana",     "nota": 6.0},
@@ -26,20 +26,23 @@ for a in alunos_ordenados :
     if a["nota"] > 7 :
         aprovados.append(a)
 
+
 # Mostrar os aprovados ordenados por nome
 print("\nAlunos aprovados (nota > 7) - ordenados por nome:\n")
 for aluno in aprovados:
     print(f"{aluno['nome']} - Nota: {aluno['nota']}")
 
+# Mostrar os aprovados ordenados por nota
+print("\nAlunos aprovados (nota > 7) - ordenados por nota:\n")
+######### DESENVOLVA O ALGORITMO ##############
 
-# Mostrar os aprovados ordenados por média
-print("\nAlunos aprovados (nota > 7) - ordenados por nome:\n")
-######## CRIE O ALGORITMO ########
 
 
 # Outras formas de usar o laço:
-
-# aprovados = [a for a in alunos_ordenados if a["nota"] > 7]
-
-# for i, aluno in enumerate(alunos, start=1):
-#    print(f"{i}º aluno: {aluno['nome']} - Nota: {aluno['nota']}")
+#
+# 1 - Única linha
+#   aprovados = [a for a in alunos_nota if a["nota"] > 7]
+#
+# 2 - com índices
+#   for i, aluno in enumerate(alunos, start=1):
+#       print(f"{i}º aluno: {aluno['nome']} - Nota: {aluno['nota']}")
