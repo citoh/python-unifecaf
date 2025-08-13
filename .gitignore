@@ -1,1 +1,4 @@
 test.py
+venv
+.python-version
+.DS_Store
