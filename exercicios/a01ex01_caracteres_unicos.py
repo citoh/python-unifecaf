@@ -1,5 +1,5 @@
 # Leia todos os caracteres de uma string e retorne todos os 
-# caracteres que não possuírem par. Por exemplo:
+# caracteres únicos. Por exemplo:
 #     aabcc  => b
 #     aabbccaafbbbaaacaa  => fc
 #     aabbcc => None
