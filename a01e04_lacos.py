@@ -34,8 +34,9 @@ for aluno in aprovados:
 
 # Mostrar os aprovados ordenados por nota
 print("\nAlunos aprovados (nota > 7) - ordenados por nota:\n")
-######### DESENVOLVA O ALGORITMO ##############
-
+alunos_notas = sorted(alunos, key=lambda aluno: aluno["nota"], reverse = True)
+for i, aluno in enumerate(alunos_notas, start = 1):
+    print(f"{i}º - {aluno['nome']} - Nota: {aluno['nota']}")
 
 
 # Outras formas de usar o laço:
@@ -46,3 +47,12 @@ print("\nAlunos aprovados (nota > 7) - ordenados por nota:\n")
 # 2 - com índices
 #   for i, aluno in enumerate(alunos, start=1):
 #       print(f"{i}º aluno: {aluno['nome']} - Nota: {aluno['nota']}")
+
+
+numeros = [2, 5, 7, 8]
+somatoria = 0
+for i in range(len(numeros)):
+	 somatoria += numeros[i]
+      
+# i - controlador
+# somatoria - acumulador
