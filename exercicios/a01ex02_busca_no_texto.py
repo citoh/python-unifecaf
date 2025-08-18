@@ -7,3 +7,21 @@
 #     Retorno experado: True
 
 
+def searchText(text, search):
+    idxSearch = 0
+    foundChars = ''
+    for char in text: 
+        if(char == search[idxSearch]):
+            foundChars += search[idxSearch]
+            idxSearch += 1
+            if(foundChars == search):
+                return True
+        else:
+            idxSearch = 0
+            foundChars = ''
+    return False
+        
+
+search = 'brasil'
+text = 'no brasil existem muitos lugares bonitos'
+print(searchText(text, search))
