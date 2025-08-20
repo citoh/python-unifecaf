@@ -1,3 +1,4 @@
+# RESOLVIDO !!
 # Busque no texto principal o valor digitado pelo usuário, 
 # ao final retorne True se o valor for encontrado ou False 
 # caso contrário. Deve ser analisado caractere por caractere. 
@@ -7,21 +8,21 @@
 #     Retorno experado: True
 
 
-def searchText(text, search):
-    idxSearch = 0
-    foundChars = ''
-    for char in text: 
-        if(char == search[idxSearch]):
-            foundChars += search[idxSearch]
-            idxSearch += 1
-            if(foundChars == search):
+def buscaTexto(texto, termo):
+    idxTermo = 0
+    caracteresEncontrados = ''
+    for char in texto: 
+        if(char == termo[idxTermo]):
+            caracteresEncontrados += termo[idxTermo]
+            idxTermo += 1
+            if(caracteresEncontrados == termo):
                 return True
         else:
-            idxSearch = 0
-            foundChars = ''
+            idxTermo = 0
+            caracteresEncontrados = ''
     return False
         
 
-search = 'brasil'
-text = 'no brasil existem muitos lugares bonitos'
-print(searchText(text, search))
+termo = 'brasil'
+texto = 'no brasil existem muitos lugares bonitos'
+print(buscaTexto(texto, termo))

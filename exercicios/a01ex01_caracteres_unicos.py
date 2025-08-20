@@ -1,3 +1,4 @@
+# RESOLVIDO !!
 # Leia todos os caracteres de uma string e retorne todos os 
 # caracteres únicos. Por exemplo:
 #     aabcc  => b
@@ -5,30 +6,30 @@
 #     aabbcc => None
 
 
-def singleChars(text):
-    if text == None: 
+def caractaresUnicos(texto):
+    if texto == None: 
         return None
     
-    if len(text) == 1:
-        return text
+    if len(texto) == 1:
+        return texto
     
-    equals = 0
-    singles = []
-    for i, char in enumerate(text): 
-        if(i + 1 < len(text)):
-            if(char == text[i + 1]):
-                equals += 1
+    iguais = 0
+    unicos = []
+    for i, caracter in enumerate(texto): 
+        if(i + 1 < len(texto)):
+            if(caracter == texto[i + 1]):
+                iguais += 1
             else:
-                if(equals == 0):
-                    singles.append(char)
-                equals = 0
+                if(iguais == 0):
+                    unicos.append(caracter)
+                iguais = 0
         else:
-            if(equals == 0):
-                    singles.append(char)
+            if(iguais == 0):
+                    unicos.append(caracter)
     
-    if singles:
-        return singles
+    if unicos:
+        return unicos
     return None
 
-text = 'aabbccaafbbbaaacaa'
-print(singleChars(text))
+texto = 'aabbccaafbbbaaacaa'
+print(caractaresUnicos(texto))
