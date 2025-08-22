@@ -5,6 +5,7 @@
 #     aabbccaafbbbaaacaa  => fc
 #     aabbcc => None
 
+<<<<<<< Updated upstream
 
 def caractaresUnicos(texto):
     if texto == None: 
@@ -33,3 +34,21 @@ def caractaresUnicos(texto):
 
 texto = 'aabbccaafbbbaaacaa'
 print(caractaresUnicos(texto))
+=======
+text = 'aabbccaafbbbaaacaa'
+equals = 0
+uniqueChars = []
+for i, char in enumerate(text):
+    if (i + 1 < len(text)):
+        if (char == text[i+1]):
+            equals += 1
+        else:
+            if(equals == 0):
+                uniqueChars.append(char)
+            equals = 0
+    else:
+        if(equals == 0):
+            uniqueChars.append(char)
+
+print(uniqueChars)     
+>>>>>>> Stashed changes
