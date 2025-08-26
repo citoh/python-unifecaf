@@ -2,3 +2,4 @@ test.py
 venv
 .python-version
 .DS_Store
+/extras/json_alunos/*.xlsx
