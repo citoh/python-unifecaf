@@ -1,4 +1,6 @@
-# INSTALANDO APLICAÇÃO
+# INSTALANDO A APLICAÇÃO:
+# python3 -m venv venv
+# source venv/bin/activate
 # pip install opencv-python
 
 # cv2 se refere a opencv-python - utilizado para processar imagens

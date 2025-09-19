@@ -1,0 +1,12 @@
+[
+    {"nome": "Lucas",   "nota": 8.5},
+    {"nome": "Ana",     "nota": 6.0},
+    {"nome": "Rafael",  "nota": 7.5},
+    {"nome": "Beatriz", "nota": 9.0},
+    {"nome": "Mateus",  "nota": 5.5},
+    {"nome": "Carla",   "nota": 7.8},
+    {"nome": "João",    "nota": 4.0},
+    {"nome": "Lívia",   "nota": 10.0},
+    {"nome": "Pedro",   "nota": 7.1},
+    {"nome": "Marina",  "nota": 6.9}
+]
