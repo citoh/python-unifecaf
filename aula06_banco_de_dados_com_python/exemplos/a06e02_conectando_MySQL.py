@@ -7,11 +7,14 @@ import mysql.connector
 
 # Configuração da conexão
 config = {
-    "host": "localhost",       # ou IP do servidor
-    "user": "root",     # ex: root
-    "password": "root",   # senha do MySQL
-    "database": "unifecaf"     # banco de dados já criado
+    "host": "localhost",   # ou IP do servidor
+    "user": "root",        # ex: root
+    "password": "root",    # senha do MySQL
+    "database": "unifecaf" # banco de dados já criado
 }
+
+conn = mysql.connector.connect(**config)
+cursor = conn.cursor()
 
 try:
     # Conectando ao MySQL
