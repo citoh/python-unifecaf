@@ -1,7 +1,7 @@
 import sqlite3
 
 # Nome do arquivo do banco de dados (será criado se não existir)
-DB_NAME = "teste.db"
+DB_NAME = "teste1.db"
 
 try:
     # Conectando ao SQLite
