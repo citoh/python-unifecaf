@@ -1,6 +1,6 @@
 # Crie um programa que receba o nome de 2 arquivos de texto
-# e ao final gere um terceiro arquivo unido o conteúdo dos
-# arquivos de entrada (join)
+# e ao final gere um terceiro arquivo unindo o conteúdo 
+# dos 2 arquivos de entrada (join)
 
 def juntar_arquivos(arquivo1, arquivo2, destino):
     with open(destino, "w", encoding="utf-8") as out:
