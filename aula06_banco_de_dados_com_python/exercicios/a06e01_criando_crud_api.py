@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 # 2) Configuração do banco de dados SQLite + SQLAlchemy
-DATABASE_URL = "sqlite:///./db.sqlite3"
+DATABASE_URL = "sqlite:///./db-api.sqlite3"
 
 engine = create_engine(
     DATABASE_URL,
@@ -126,7 +126,7 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "a06e01_criando_crud:app",  # arquivo:variável
+        "a06e01_criando_crud_api:app",  # arquivo:variável
         host="127.0.0.1",
         port=3344,
         reload=True
