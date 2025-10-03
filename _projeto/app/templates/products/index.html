@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Lista</h2>
+
+{% if products %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>SKU</th>
+            <th>Preço</th>
+            <th>Criado em</th>
+            <th>Atualizado em</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in products %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.sku }}</td>
+            <td>{{ p.price|brl_price }}</td>
+            <td>{{ p.created_at.strftime("%d/%m/%Y %H:%M") }}</td>
+            <td>{{ p.updated_at.strftime("%d/%m/%Y %H:%M") }}</td>
+            <td class="actions">
+                <a class="btn" href="/products/{{ p.id }}/edit">Editar</a>
+                <form action="/products/{{ p.id }}/delete" method="post" style="display:inline">
+                    <button class="btn danger" type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="muted">Nenhum produto cadastrado.</p>
+{% endif %}
+
+{% endblock %}
