@@ -13,9 +13,6 @@ config = {
     "database": "unifecaf" # banco de dados já criado
 }
 
-conn = mysql.connector.connect(**config)
-cursor = conn.cursor()
-
 try:
     # Conectando ao MySQL
     conn = mysql.connector.connect(**config)
