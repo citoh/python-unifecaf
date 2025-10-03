@@ -1,7 +1,7 @@
 # INSTALANDO A APLICAÇÃO:
 # python3 -m venv venv
 # source venv/bin/activate
-# pip install "fastapi[all]"
+# pip install "fastapi[all]" sqlalchemy
 
 
 from fastapi import FastAPI, HTTPException
