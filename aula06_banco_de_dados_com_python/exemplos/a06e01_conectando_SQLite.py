@@ -18,7 +18,7 @@ try:
         email TEXT
     )
     """)
-
+    
     # Inserindo dados
     cursor.execute("INSERT INTO usuarios (nome, email) VALUES (?, ?)", ("Ana", "ana@email.com"))
     conn.commit()

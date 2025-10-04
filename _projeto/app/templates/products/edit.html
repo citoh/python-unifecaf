@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Editar Produto #{{ product.id }}</h2>
+
+{% include "products/form.html" with context %}
+{% endblock %}
