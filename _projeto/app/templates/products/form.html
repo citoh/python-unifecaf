@@ -1,4 +1,5 @@
-<form action="{{ action }}" method="post" class="form">
+<form action="{{ action }}" method="post" class="form"
+      {% if method_override %} data-method="{{ method_override }}" {% else %} data-method="POST" {% endif %}>
   <label>Nome
     <input type="text" name="name" value="{{ product.name if product else '' }}" required />
   </label>
@@ -14,6 +15,8 @@
 
   <div class="form-actions">
     <a class="btn" href="/products">Cancelar</a>
-    <button class="btn primary" type="submit">Salvar</button>
+    <button class="btn primary" type="submit">
+      {% if product %}Salvar Alterações{% else %}Cadastrar{% endif %}
+    </button>
   </div>
 </form>

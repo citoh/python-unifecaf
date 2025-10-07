@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>
+        <small>Código: {{ product.id }}</li></small><br>
+        {{ product.name }}
+</h2>
+
+<ul class="details">
+  <li><strong>SKU:</strong> {{ product.sku }}</li>
+  <li><strong>Preço:</strong> {{ product.price|brl_price }}</li>
+  {% if product.created_at %}<li><strong>Criado em:</strong> {{ product.created_at.strftime("%d/%m/%Y %H:%M") }}</li>{% endif %}
+  {% if product.updated_at %}<li><strong>Atualizado em:</strong> {{ product.updated_at.strftime("%d/%m/%Y %H:%M") }}</li>{% endif %}
+</ul>
+
+<p class="actions">
+  <a class="btn" href="/products/{{ product.id }}/edit">Editar</a>
+  <a class="btn" href="/products">Voltar</a>
+</p>
+{% endblock %}

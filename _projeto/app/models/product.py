@@ -1,6 +1,6 @@
+import datetime
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, Integer, Numeric, DateTime, func
-import datetime
 from app.database import Base
 
 class Product(Base):
@@ -10,7 +10,8 @@ class Product(Base):
     name: Mapped[str] = mapped_column(String(120), nullable=False, index=True)
     sku: Mapped[str] = mapped_column(String(60), unique=True, nullable=False, index=True)
     price: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False, default=0)
-    
+
+    # Datas de criação/alteração
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
