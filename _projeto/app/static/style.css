@@ -11,33 +11,25 @@
 
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     background: var(--bg);
     color: var(--fg);
-    width: 90%;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
+/* largura padrão 90% centrada */
 .container {
     width: 90%;
     margin: 0 auto;
     padding: 16px;
 }
 
-header.container {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
+nav{
+    text-align: right;
 }
 
-h1 a {
-    font-size: 20px;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 h2 {
@@ -64,6 +56,7 @@ h2 {
     background: #fafafa;
 }
 
+/* botões */
 .btn {
     display: inline-block;
     padding: 8px 12px;
@@ -87,11 +80,7 @@ h2 {
     border-color: #e9bcbc;
 }
 
-.actions {
-    display: flex;
-    gap: 8px;
-}
-
+/* formulários */
 .form {
     display: grid;
     gap: 12px;
@@ -114,4 +103,21 @@ h2 {
     gap: 8px;
     justify-content: flex-end;
     margin-top: 8px;
+}
+
+/* diversos */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.details {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+}
+
+.inline-form {
+    display: inline;
 }

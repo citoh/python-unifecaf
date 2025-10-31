@@ -1,21 +1,55 @@
 <!doctype html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ title or "Produtos" }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title or "Produtos" }}</title>
+    <!-- Importa o CSS estático (note: sem / inicial no path) -->
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
+
 <body>
-  <header class="container">
-    <h1><a href="/products">Cadastro de Produtos</a></h1>
-    <nav><a class="btn" href="/products/new">+ Novo Produto</a></nav>
-  </header>
-  <main class="container">
-    {% block content %}{% endblock %}
-  </main>
-  <footer class="container muted">
-    <small>UniFECAF - Projeto Semestral</small>
-  </footer>
+    <header class="container">
+        <h1><a href="/products">Cadastro de Produtos</a></h1>
+        <nav>
+            <a class="btn" href="/products/new">+ Novo Produto</a>
+            <a class="btn" href="/products/import">Importar</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="container muted">
+        <small>UniFECAF - Projeto Semestral</small>
+    </footer>
+
+    <!-- Suporte a PUT/DELETE via <form data-method="..."> -->
+    <script>
+        document.addEventListener("submit", async function (event) {
+            const form = event.target;
+            const method = form.dataset.method?.toUpperCase();
+            if (method !== "PUT" && method !== "DELETE") return; // POST segue normal
+
+            event.preventDefault();
+
+            const action = form.getAttribute("action");
+            const formData = new FormData(form);
+            const response = await fetch(action, {
+                method,
+                body: method === "DELETE" ? null : formData
+            });
+
+            if (response.ok) {
+                window.location.href = "/products";
+            } else {
+                const msg = await response.text().catch(() => "");
+                alert("Erro: " + response.status + "\n" + msg);
+            }
+        });
+    </script>
 </body>
+
 </html>
