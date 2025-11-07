@@ -36,7 +36,7 @@ def insertion_sort(lista):
 
 
 #------------------------------------------------------
-# Merge Sort - uso de reursão
+# Merge Sort - uso de recursão
 def merge_sort(lista):
     # Caso base: lista com 1 ou 0 elementos já está ordenada
     if len(lista) <= 1:
@@ -73,7 +73,7 @@ def merge(esquerda, direita):
 
 
 #------------------------------------------------------
-# Quick Sort - uso de reursão
+# Quick Sort - uso de recursão
 def quick_sort(lista):
     # Caso base: lista com 0 ou 1 elementos já está ordenada
     if len(lista) <= 1:
