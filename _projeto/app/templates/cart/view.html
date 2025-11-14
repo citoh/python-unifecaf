@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Meu Carrinho</h2>
+
+{% if items and items|length %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produto</th>
+            <th>SKU</th>
+            <th>Preço Unitário</th>
+            <th>Quantidade</th>
+            <th>Subtotal</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.sku }}</td>
+            <td>{{ item.product.price|brl_price }}</td>
+            <td>
+                <form method="post" action="/cart/update/{{ item.id }}" style="display:inline;">
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width:60px;">
+                    <button type="submit" class="btn"><i class="fas fa-sync"></i> Atualizar</button>
+                </form>
+            </td>
+            <td>{{ item.get_subtotal()|brl_price }}</td>
+            <td>
+                <form method="post" action="/cart/remove/{{ item.id }}" style="display:inline;">
+                    <button type="submit" class="btn danger"><i class="fas fa-trash"></i> Remover</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" style="text-align:right;"><strong>Total:</strong></td>
+            <td><strong>{{ total|brl_price }}</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% else %}
+<p class="muted">Seu carrinho está vazio.</p>
+{% endif %}
+
+<p class="actions">
+    <button type="button" class="btn" onclick="window.location.href='/products'"><i class="fas fa-arrow-left"></i> Continuar Comprando</button>
+</p>
+{% endblock %}
+

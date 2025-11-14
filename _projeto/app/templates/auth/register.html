@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Registrar</h2>
+
+{% if errors %}
+<div class="error-message">
+    <strong>Erros:</strong>
+    <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<form method="post" action="/register" class="form">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="{{ username if username else '' }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required minlength="6">
+    </div>
+
+    <div class="form-group">
+        <label>Tipo de usuário:</label>
+        <div>
+            <label style="display: inline-block; margin-right: 20px;">
+                <input type="radio" name="role" value="user" {% if not role or role == 'user' %}checked{% endif %}> Usuário
+            </label>
+            <label style="display: inline-block;">
+                <input type="radio" name="role" value="admin" {% if role == 'admin' %}checked{% endif %}> Administrador
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn primary"><i class="fas fa-user-plus"></i> Registrar</button>
+    </div>
+</form>
+{% endblock %}
+

@@ -14,9 +14,9 @@
     </label>
 
     <div class="form-actions">
-        <a class="btn" href="/products">Cancelar</a>
-        <button class="btn primary" type="submit">
-            {% if product %}Salvar Alterações{% else %}Cadastrar{% endif %}
+        <button type="button" class="btn" onclick="window.location.href='/products'"><i class="fas fa-times"></i> Cancelar</button>
+        <button type="submit" class="btn primary">
+            <i class="fas fa-save"></i> {% if product %}Salvar Alterações{% else %}Cadastrar{% endif %}
         </button>
     </div>
 </form>

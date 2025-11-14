@@ -5,16 +5,33 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ title or "Produtos" }}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Importa o CSS estático (note: sem / inicial no path) -->
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
 
 <body>
     <header class="container">
-        <h1><a href="/products">Cadastro de Produtos</a></h1>
+        {% if current_user %}
+            <h1><a href="/products">Cadastro de Produtos</a></h1>
+        {% else %}
+            <h1><a href="/">Sistema de Produtos</a></h1>
+        {% endif %}
         <nav>
-            <a class="btn" href="/products/new">+ Novo Produto</a>
-            <a class="btn" href="/products/import">Importar</a>
+            {% if current_user %}
+                {% if current_user.is_admin() %}
+                    <button type="button" class="btn" onclick="window.location.href='/products/new'"><i class="fas fa-plus"></i> Novo Produto</button>
+                    <button type="button" class="btn" onclick="window.location.href='/products/import'"><i class="fas fa-file-import"></i> Importar</button>
+                {% else %}
+                    <button type="button" class="btn" onclick="window.location.href='/cart'"><i class="fas fa-shopping-cart"></i> Carrinho</button>
+                {% endif %}
+                <span style="margin: 0 10px;">Olá, {{ current_user.username }} ({{ current_user.role.value }})</span>
+                <button type="button" class="btn" onclick="window.location.href='/logout'"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            {% else %}
+                <button type="button" class="btn" onclick="window.location.href='/'"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button type="button" class="btn" onclick="window.location.href='/register'"><i class="fas fa-user-plus"></i> Registrar</button>
+            {% endif %}
         </nav>
     </header>
 

@@ -15,7 +15,8 @@ from openpyxl import load_workbook
 
 # Importações do projeto
 from app.database import get_db, engine, Base
-from app.models import Product
+from app.models import Product, User, Cart, CartItem  # Importa todos os modelos para criar as tabelas
+from app.dependencies import require_admin, get_current_user_optional, get_current_user
 
 from app.helpers import format_brl_price, format_brl_date, parse_brl_price
 
@@ -33,11 +34,8 @@ templates.env.filters["brl_date"] = format_brl_date
 
 
 # ------------------------------------------------------------------
-# Redireciona a raiz "/" para "/products"
+# Redireciona a raiz "/" - removido, agora está no main.py
 # ------------------------------------------------------------------
-@router.get("/", include_in_schema=False)
-def root_redirect():
-    return RedirectResponse(url="/products", status_code=status.HTTP_302_FOUND)
 
 
 # ------------------------------------------------------------------
@@ -45,13 +43,14 @@ def root_redirect():
 # Exibe a lista completa de produtos cadastrados
 # ------------------------------------------------------------------
 @router.get("/products")
-def list_products(request: Request, db: Session = Depends(get_db)):
+def list_products(request: Request, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
+    """Lista produtos. Admin vê gerenciamento completo, user vê lista para compra."""
     # Busca todos os produtos, ordenando do mais recente para o mais antigo
     products = db.scalars(select(Product).order_by(Product.id.desc())).all()
     # Renderiza a página de listagem
     return templates.TemplateResponse(
         "products/index.html",
-        {"request": request, "products": products}
+        {"request": request, "products": products, "current_user": current_user}
     )
 
 
@@ -60,14 +59,15 @@ def list_products(request: Request, db: Session = Depends(get_db)):
 # Exibe o formulário vazio para cadastro de um novo produto
 # ------------------------------------------------------------------
 @router.get("/products/new")
-def new_product_form(request: Request):
+def new_product_form(request: Request, current_user = Depends(require_admin)):
     return templates.TemplateResponse(
         "products/new.html",
         {
             "request": request,
             "action": "/products",             # rota de envio do formulário
             "method_override": "POST",         # método HTTP utilizado
-            "product": None                    # sem produto (novo cadastro)
+            "product": None,                   # sem produto (novo cadastro)
+            "current_user": current_user
         }
     )
 
@@ -77,7 +77,7 @@ def new_product_form(request: Request):
 # Exibe o formulário preenchido com os dados de um produto existente
 # ------------------------------------------------------------------
 @router.get("/products/{product_id}/edit")
-def edit_product_form(product_id: int, request: Request, db: Session = Depends(get_db)):
+def edit_product_form(product_id: int, request: Request, db: Session = Depends(get_db), current_user = Depends(require_admin)):
     # Busca o produto pelo ID
     product = db.get(Product, product_id)
     if not product:
@@ -90,7 +90,8 @@ def edit_product_form(product_id: int, request: Request, db: Session = Depends(g
             "request": request,
             "action": f"/products/{product.id}",  # rota para envio da atualização
             "method_override": "PUT",             # método de atualização
-            "product": product
+            "product": product,
+            "current_user": current_user
         }
     )
 
@@ -105,6 +106,7 @@ def create_product(
     sku: str = Form(...),
     price: float = Form(...),
     db: Session = Depends(get_db),
+    current_user = Depends(require_admin),
 ):
     # Validação simples de campos obrigatórios
     if not name.strip() or not sku.strip():
@@ -133,6 +135,7 @@ def update_product(
     sku: str = Form(...),
     price: float = Form(...),
     db: Session = Depends(get_db),
+    current_user = Depends(require_admin),
 ):
     # Busca o produto pelo ID
     product = db.get(Product, product_id)
@@ -161,7 +164,7 @@ def update_product(
 # Remove um produto do banco de dados
 # ------------------------------------------------------------------
 @router.delete("/products/{product_id}")
-def delete_product(product_id: int, db: Session = Depends(get_db)):
+def delete_product(product_id: int, db: Session = Depends(get_db), current_user = Depends(require_admin)):
     # Busca o produto pelo ID
     product = db.get(Product, product_id)
     if not product:
@@ -182,10 +185,10 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
 
 # Formulário de Importação    
 @router.get("/products/import")
-def import_products_form(request: Request):
+def import_products_form(request: Request, current_user = Depends(require_admin)):
     return templates.TemplateResponse(
         "products/import.html",
-        {"request": request, "report": None}
+        {"request": request, "report": None, "current_user": current_user}
     )
 
 
@@ -195,6 +198,7 @@ async def import_products(
     request: Request,
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
+    current_user = Depends(require_admin),
 ):
     """
     Recebe um arquivo .xlsx com colunas obrigatórias:
@@ -222,7 +226,7 @@ async def import_products(
     if ws.max_row < 2:
         return templates.TemplateResponse(
             "products/import.html",
-            {"request": request, "report": {"imported": 0, "skipped": 0, "errors": [{"row": 1, "error": "Planilha vazia"}]}}
+            {"request": request, "report": {"imported": 0, "skipped": 0, "errors": [{"row": 1, "error": "Planilha vazia"}]}, "current_user": current_user}
         )
 
     # -------------------------------------------------------------
@@ -293,7 +297,7 @@ async def import_products(
     report = {"imported": imported, "skipped": skipped, "errors": errors}
     return templates.TemplateResponse(
         "products/import.html",
-        {"request": request, "report": report}
+        {"request": request, "report": report, "current_user": current_user}
     )
     
 # ------------------------------------------------------------------
@@ -301,7 +305,7 @@ async def import_products(
 # Exibe os dados detalhados de um produto específico
 # ------------------------------------------------------------------
 @router.get("/products/{product_id}")
-def get_product(product_id: int, request: Request, db: Session = Depends(get_db)):
+def get_product(product_id: int, request: Request, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     # Busca o produto pelo ID
     product = db.get(Product, product_id)
     if not product:
@@ -310,5 +314,5 @@ def get_product(product_id: int, request: Request, db: Session = Depends(get_db)
     # Renderiza a página de detalhes
     return templates.TemplateResponse(
         "products/show.html",
-        {"request": request, "product": product}
+        {"request": request, "product": product, "current_user": current_user}
     )

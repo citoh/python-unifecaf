@@ -20,7 +20,13 @@
 </ul>
 
 <p class="actions">
-    <a class="btn" href="/products/{{ product.id }}/edit">Editar</a>
-    <a class="btn" href="/products">Voltar</a>
+    {% if current_user and current_user.is_admin() %}
+        <button type="button" class="btn" onclick="window.location.href='/products/{{ product.id }}/edit'"><i class="fas fa-edit"></i> Editar</button>
+    {% elif current_user %}
+        <form method="post" action="/cart/add/{{ product.id }}" style="display:inline;">
+            <button type="submit" class="btn primary"><i class="fas fa-cart-plus"></i><i class="fas fa-plus"></i></button>
+        </form>
+    {% endif %}
+    <button type="button" class="btn" onclick="window.location.href='/products'"><i class="fas fa-arrow-left"></i> Voltar</button>
 </p>
 {% endblock %}

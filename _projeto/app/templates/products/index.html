@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Produtos</h2>
+{% if current_user and current_user.is_admin() %}
+    <h2>Gerenciamento de Produtos</h2>
+{% else %}
+    <h2>Produtos Disponíveis</h2>
+{% endif %}
 
 {% if products and products|length %}
 <table class="table">
@@ -25,15 +29,20 @@
             <td>{{ p.created_at | brl_date }}</td>
             <td>{{ p.updated_at | brl_date }}</td>
             <td class="actions">
-                <a class="btn" href="/products/{{ p.id }}">Detalhes</a>
-                <a class="btn" href="/products/{{ p.id }}/edit">Editar</a>
-
-                <!-- DELETE REST -->
-                <form action="/products/{{ p.id }}" method="post" data-method="DELETE" class="inline-form"
-                    style="display:inline">
-                    <button class="btn danger" type="submit"
-                        onclick="return confirm('Excluir este produto?')">Excluir</button>
-                </form>
+                <button type="button" class="btn" onclick="window.location.href='/products/{{ p.id }}'"><i class="fas fa-eye"></i> Detalhes</button>
+                {% if current_user and current_user.is_admin() %}
+                    <button type="button" class="btn" onclick="window.location.href='/products/{{ p.id }}/edit'"><i class="fas fa-edit"></i> Editar</button>
+                    <!-- DELETE REST -->
+                    <form action="/products/{{ p.id }}" method="post" data-method="DELETE" class="inline-form"
+                        style="display:inline">
+                        <button type="submit" class="btn danger"
+                            onclick="return confirm('Excluir este produto?')"><i class="fas fa-trash"></i> Excluir</button>
+                    </form>
+                {% elif current_user %}
+                    <form method="post" action="/cart/add/{{ p.id }}" style="display:inline;">
+                        <button type="submit" class="btn primary"><i class="fas fa-cart-plus"></i><i class="fas fa-plus"></i></button>
+                    </form>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
